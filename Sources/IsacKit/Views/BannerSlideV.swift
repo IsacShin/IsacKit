@@ -16,31 +16,67 @@ public struct BannerSlideV: View {
         case leadingBottom
     }
     
+    let items: [String] // 이미지 URL
+    let placeholderImage: UIImage? // 플레이스홀더 이미지
+    let showIndicator: Bool // 기본 인디케이터 표시 여부(커스텀 X)
+    
     /// 오토 스크롤 설정
-    let autoScrollEnabled: Bool = true // 자동 스크롤 활성화 여부
-    let autoScrollInterval: TimeInterval = 3.0 // 3초 간격 자동 스크롤
+    let autoScrollEnabled: Bool // 자동 스크롤 활성화 여부
+    let autoScrollInterval: TimeInterval // 3초 간격 자동 스크롤
     @State private var currentIndex = 0 // 현재 페이지
     @State private var timer: Timer? = nil
     
-    let items: [String] // 이미지 URL
-    let placeholderImage: UIImage? = nil // 플레이스홀더 이미지
-    let showIndicator: Bool = true // 기본 인디케이터 표시 여부(커스텀 X)
-    
     /// 커스텀 인디케이터 설정
-    let customIndicator: Bool = true
-    let customIndicatorSize: CGFloat = 8
-    let customIndicatorCurrentColor: Color = .primary
-    let customIndicatorColor: Color = Color.secondary.opacity(0.3)
-    let customIndicatorSpacing: CGFloat = 8
-    let customIndicatorPadding: CGFloat = 8
+    let customIndicator: Bool
+    let customIndicatorSize: CGFloat
+    let customIndicatorCurrentColor: Color
+    let customIndicatorColor: Color
+    let customIndicatorSpacing: CGFloat
+    let customIndicatorPadding: CGFloat
     
     /// 커스텀 인티케이터(숫자타입)
-    let numIndicator: Bool = true
-    let numIndicatorFont: Font = .system(size: 14, weight: .semibold)
-    let numIndicatorColor: Color = .white
-    let numIndicatorBgColor: Color = Color.black.opacity(0.5)
-    let numIndicatorCornerRadius: CGFloat = 12
-    let numIndicatorPosition: Position = .trailingBottom
+    let numIndicator: Bool
+    let numIndicatorFont: Font
+    let numIndicatorColor: Color
+    let numIndicatorBgColor: Color
+    let numIndicatorCornerRadius: CGFloat
+    let numIndicatorPosition: Position
+    
+    init(items: [String],
+         placeholderImage: UIImage? = nil,
+         showIndicator: Bool = true,
+         autoScrollEnabled: Bool = true,
+         autoScrollInterval: TimeInterval = 3.0,
+         customIndicator: Bool = true,
+         customIndicatorSize: CGFloat = 8,
+         customIndicatorCurrentColor: Color = .primary,
+         customIndicatorColor: Color = Color.secondary.opacity(0.3),
+         customIndicatorSpacing: CGFloat = 8,
+         customIndicatorPadding: CGFloat = 8,
+         numIndicator: Bool = true,
+         numIndicatorFont: Font = .system(size: 14, weight: .semibold),
+         numIndicatorColor: Color = .white,
+         numIndicatorBgColor: Color = Color.black.opacity(0.5),
+         numIndicatorCornerRadius: CGFloat = 12,
+         numIndicatorPosition: Position = .trailingBottom) {
+        self.items = items
+        self.placeholderImage = placeholderImage
+        self.showIndicator = showIndicator
+        self.autoScrollEnabled = autoScrollEnabled
+        self.autoScrollInterval = autoScrollInterval
+        self.customIndicator = customIndicator
+        self.customIndicatorSize = customIndicatorSize
+        self.customIndicatorCurrentColor = customIndicatorCurrentColor
+        self.customIndicatorColor = customIndicatorColor
+        self.customIndicatorSpacing = customIndicatorSpacing
+        self.customIndicatorPadding = customIndicatorPadding
+        self.numIndicator = numIndicator
+        self.numIndicatorFont = numIndicatorFont
+        self.numIndicatorColor = numIndicatorColor
+        self.numIndicatorBgColor = numIndicatorBgColor
+        self.numIndicatorCornerRadius = numIndicatorCornerRadius
+        self.numIndicatorPosition = numIndicatorPosition
+    }
     
     public var body: some View {
         GeometryReader { g in
