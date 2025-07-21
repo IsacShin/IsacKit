@@ -17,7 +17,7 @@ public struct BannerSlideV: View {
     }
     
     let items: [String] // 이미지 URL
-    let placeholderImage: UIImage? // 플레이스홀더 이미지
+    let placeholderImage: UIImage? // 기본 이미지
     let showIndicator: Bool // 기본 인디케이터 표시 여부(커스텀 X)
     
     /// 오토 스크롤 설정

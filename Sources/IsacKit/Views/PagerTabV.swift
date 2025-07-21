@@ -22,11 +22,11 @@ public struct TabItem<Content: View>: Identifiable {
 @available(iOS 14.0, *)
 public struct PagerTabV<Content: View>: View {
     @State private var currentIndex = 0
-    public let tabs: [TabItem<Content>]
-    public let titleColor: Color
-    public let selectedTitleColor: Color
-    public let titleFont: Font
-    public let indicatorColor: Color
+    public let tabs: [TabItem<Content>] // 탭 아이템 배열
+    public let titleColor: Color // 일반 탭 제목 색상
+    public let selectedTitleColor: Color // 선택된 탭 제목 색상
+    public let titleFont: Font // 탭 제목 폰트
+    public let indicatorColor: Color // 인디케이터 색상
     
     init(tabs: [TabItem<Content>],
          titleColor: Color = .secondary,
