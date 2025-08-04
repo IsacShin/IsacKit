@@ -10,13 +10,13 @@ import SwiftData
 
 @available(iOS 17.0, *)
 @MainActor
-final public class SwiftDataManager {
+final public class ISSwiftDataManager {
 
     private let container: ModelContainer
     private var context: ModelContext { container.mainContext }
 
-    public static func makeShared(for model: any PersistentModel.Type) -> SwiftDataManager {
-        return SwiftDataManager(model: model)
+    public static func makeShared(for model: any PersistentModel.Type) -> ISSwiftDataManager {
+        return ISSwiftDataManager(model: model)
     }
 
     private init(model: any PersistentModel.Type) {

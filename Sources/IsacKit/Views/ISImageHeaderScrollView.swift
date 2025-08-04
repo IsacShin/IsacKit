@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-public struct SubView<Content: View>: Identifiable {
+public struct ISSubView<Content: View>: Identifiable {
     public let id = UUID()
     public let content: AnyView
     
@@ -18,15 +18,15 @@ public struct SubView<Content: View>: Identifiable {
 }
 
 @available(iOS 14.0, *)
-public struct ImageHeaderScrollV<Content: View>: View {
+public struct ISImageHeaderScrollView<Content: View>: View {
     @State private var offsetY: CGFloat = CGFloat.zero
     
     let imageUrlString: String // 이미지 URL
     let placeholderImage: UIImage? = nil // 기본 이미지
     let imageHeight: CGFloat = 250 // 이미지 높이
-    let imageSubView: SubView<Content> // 이미지뷰 위에 표시될 뷰
-    let stickyHeaderView: SubView<Content> // 고정 헤더 뷰
-    let contentView: [SubView<Content>] // 스크롤뷰 아래에 표시될 콘텐츠
+    let imageSubView: ISSubView<Content> // 이미지뷰 위에 표시될 뷰
+    let stickyHeaderView: ISSubView<Content> // 고정 헤더 뷰
+    let contentView: [ISSubView<Content>] // 스크롤뷰 아래에 표시될 콘텐츠
     var isStickyHeader: Bool = false // 고정 여부
     
     public var body: some View {
@@ -73,7 +73,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
         )
     }
     
-    func listVStackView(contentView: [SubView<Content>]) -> some View {
+    func listVStackView(contentView: [ISSubView<Content>]) -> some View {
         VStack {
             ForEach(contentView, id: \.id) { subView in
                 subView.content
@@ -94,8 +94,8 @@ public struct ImageHeaderScrollV<Content: View>: View {
 
 @available(iOS 14.0, *)
 #Preview {
-    ImageHeaderScrollV<AnyView>(imageUrlString: "https://picsum.photos/375/250",
-                                imageSubView: SubView(content: {
+    ISImageHeaderScrollView<AnyView>(imageUrlString: "https://picsum.photos/375/250",
+                                imageSubView: ISSubView(content: {
         Text("Example Image Header")
             .foregroundColor(.white)
             .font(.title)
@@ -103,7 +103,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
             .padding(.vertical, 20)
 
     }),
-                                stickyHeaderView: SubView(content: {
+                                stickyHeaderView: ISSubView(content: {
         VStack {
             Spacer()
             Text("Example Sticky Header")
@@ -117,7 +117,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
         .background(Rectangle().foregroundColor(.white))
     }),
                                 contentView: [
-                                    SubView(content: {
+                                    ISSubView(content: {
                                         ZStack {
                                             Image("title")
                                                 .resizable()
@@ -135,7 +135,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 2)
                                     }),
-                                    SubView(content: {
+                                    ISSubView(content: {
                                         ZStack {
                                             Image("title")
                                                 .resizable()
@@ -153,7 +153,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 2)
                                     }),
-                                    SubView(content: {
+                                    ISSubView(content: {
                                         ZStack {
                                             Image("title")
                                                 .resizable()
@@ -171,7 +171,7 @@ public struct ImageHeaderScrollV<Content: View>: View {
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 2)
                                     }),
-                                    SubView(content: {
+                                    ISSubView(content: {
                                         ZStack {
                                             Image("title")
                                                 .resizable()

@@ -7,7 +7,7 @@
 
 import SwiftUI
 /*
- - NavigationManager.swift
+ - ISNavigationStackManager.swift
     - 싱글톤 패턴을 사용하여 앱 전역에서 네비게이션 상태를 관리하는 클래스입니다.
     - NavigationPath를 사용하여 현재 네비게이션 경로를 추적합니다.
     - 주요 기능
@@ -36,8 +36,8 @@ import SwiftUI
  */
 @available(iOS 16.0, *)
 @MainActor
-public final class NavigationManager: ObservableObject {
-    public static let shared = NavigationManager() // 싱글톤 인스턴스
+public final class ISNavigationStackManager: ObservableObject {
+    public static let shared = ISNavigationStackManager() // 싱글톤 인스턴스
     
     @Published var path = NavigationPath()
     
@@ -53,5 +53,50 @@ public final class NavigationManager: ObservableObject {
     
     public func popToRoot() {
         path.removeLast(path.count)
+    }
+}
+
+@available(iOS 13.0, *)
+@MainActor
+final class ISNavigationManager: ObservableObject {
+    static let shared = ISNavigationManager()
+    
+    @Published private(set) var viewStack: [ViewItem] = []
+    
+    private init() {}
+    
+    struct ViewItem: Identifiable, Equatable {
+        let id: String
+        let view: AnyView
+        let presentationStyle: PresentationStyle
+        
+        enum PresentationStyle {
+            case navigationLink
+            case sheet
+            case fullScreenCover
+        }
+
+        static func == (lhs: ViewItem, rhs: ViewItem) -> Bool {
+            lhs.id == rhs.id
+        }
+    }
+
+    var activeView: ViewItem? {
+        viewStack.last
+    }
+
+    func push<V: View>(_ view: V, id: String, style: ViewItem.PresentationStyle = .navigationLink) {
+        if !viewStack.contains(where: { $0.id == id }) {
+            let item = ViewItem(id: id, view: AnyView(view), presentationStyle: style)
+            viewStack.append(item)
+        }
+    }
+
+    func pop() {
+        _ = viewStack.popLast()
+    }
+
+    func popToRoot() {
+        viewStack.removeAll()
     }
 }

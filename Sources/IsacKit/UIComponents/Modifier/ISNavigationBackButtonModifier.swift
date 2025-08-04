@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
-public struct NavigationBackButtonModifier: ViewModifier {
+@available(iOS 14.0, *)
+public struct ISNavigationBackButtonModifier: ViewModifier {
     let color: Color
     let action: () -> Void
     
@@ -25,7 +25,7 @@ public struct NavigationBackButtonModifier: ViewModifier {
                         action()
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(color)
+                            .foregroundColor(color)
                     }
                 }
             }

@@ -8,8 +8,8 @@
 import Foundation
 
 @available(iOS 13.0, *)
-final public class NetworkManager {
-    @MainActor public static let shared = NetworkManager()
+final public class ISNetworkManager {
+    @MainActor public static let shared = ISNetworkManager()
     private init() {}
 
     // MARK: - GET
@@ -73,7 +73,7 @@ final public class NetworkManager {
             let (data, response) = try await URLSession.shared.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                throw APIError.invalidResponse
+                throw ISAPIError.invalidResponse
             }
 
             // 🔍 Logging Response
@@ -81,20 +81,20 @@ final public class NetworkManager {
             print("Response Body: \(String(data: data, encoding: .utf8) ?? "-")")
 
             guard 200..<300 ~= httpResponse.statusCode else {
-                throw APIError.serverError(statusCode: httpResponse.statusCode)
+                throw ISAPIError.serverError(statusCode: httpResponse.statusCode)
             }
 
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
                 return decoded
             } catch {
-                throw APIError.decodingFailed
+                throw ISAPIError.decodingFailed
             }
 
         } catch {
             // 🔍 Logging Error
             print("Network Error: \(error.localizedDescription)")
-            throw error as? APIError ?? APIError.custom(message: error.localizedDescription)
+            throw error as? ISAPIError ?? ISAPIError.custom(message: error.localizedDescription)
         }
     }
 }

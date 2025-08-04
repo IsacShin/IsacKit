@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum APIError: Error, LocalizedError {
+public enum ISAPIError: Error, LocalizedError {
     case invalidURL
     case invalidResponse
     case decodingFailed

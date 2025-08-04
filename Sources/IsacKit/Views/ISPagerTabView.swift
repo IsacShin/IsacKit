@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-public struct TabItem<Content: View>: Identifiable {
+public struct ISTabItem<Content: View>: Identifiable {
     public let id = UUID()
     public let title: String
     public let content: AnyView
@@ -20,15 +20,15 @@ public struct TabItem<Content: View>: Identifiable {
 }
 
 @available(iOS 14.0, *)
-public struct PagerTabV<Content: View>: View {
-    @State private var currentIndex = 0
-    public let tabs: [TabItem<Content>] // 탭 아이템 배열
+public struct ISPagerTabView<Content: View>: View {
+    @State private(set) var currentIndex = 0
+    public let tabs: [ISTabItem<Content>] // 탭 아이템 배열
     public let titleColor: Color // 일반 탭 제목 색상
     public let selectedTitleColor: Color // 선택된 탭 제목 색상
     public let titleFont: Font // 탭 제목 폰트
     public let indicatorColor: Color // 인디케이터 색상
     
-    init(tabs: [TabItem<Content>],
+    init(tabs: [ISTabItem<Content>],
          titleColor: Color = .secondary,
          selectedTitleColor: Color = .black,
          titleFont: Font = .system(size: 16, weight: .semibold),
@@ -42,12 +42,12 @@ public struct PagerTabV<Content: View>: View {
 
     public var body: some View {
         VStack(spacing: 0) {
-            PagerTabBarV(currentIndex: $currentIndex,
-                         tabs: tabs.map { $0.title },
-                         titleColor: titleColor,
-                         selectedTitleColor: selectedTitleColor,
-                         titleFont: titleFont,
-                         indicatorColor: indicatorColor)
+            ISPagerTabBarView(currentIndex: $currentIndex,
+                              tabs: tabs.map { $0.title },
+                              titleColor: titleColor,
+                              selectedTitleColor: selectedTitleColor,
+                              titleFont: titleFont,
+                              indicatorColor: indicatorColor)
 
             TabView(selection: $currentIndex) {
                 ForEach(tabs.indices, id: \.self) { index in
@@ -64,7 +64,7 @@ public struct PagerTabV<Content: View>: View {
 }
 
 @available(iOS 14.0, *)
-public struct PagerTabBarV: View {
+public struct ISPagerTabBarView: View {
     @Binding var currentIndex: Int // 현재페이지
     public let tabs: [String] // 화면 리스트
     public let titleColor: Color
@@ -132,18 +132,18 @@ private struct TabItemPreferenceKey: PreferenceKey {
 
 @available(iOS 14.0, *)
 #Preview {
-    PagerTabV<AnyView>(tabs: [
-        TabItem(title: "Tab 1") {
+    ISPagerTabView<AnyView>(tabs: [
+        ISTabItem(title: "Tab 1") {
             Text("Content for Tab 1")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.red.opacity(0.3))
         },
-        TabItem(title: "Tab 2") {
+        ISTabItem(title: "Tab 2") {
             Text("Content for Tab 2")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.green.opacity(0.3))
         },
-        TabItem(title: "Tab 3") {
+        ISTabItem(title: "Tab 3") {
             Text("Content for Tab 3")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.blue.opacity(0.3))

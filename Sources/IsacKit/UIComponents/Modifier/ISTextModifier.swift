@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
-public struct TextModifier: ViewModifier {
+@available(iOS 14.0, *)
+public struct ISTextModifier: ViewModifier {
     let font: Font
     let foregroundColor: Color
     let backgroundColor: Color?
@@ -22,7 +22,7 @@ public struct TextModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .font(font)
-            .foregroundStyle(foregroundColor)
+            .accentColor(foregroundColor)
             .background(backgroundColor)
     }
 }

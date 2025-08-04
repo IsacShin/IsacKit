@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 14.0, *)
-public struct BannerSlideV: View {
+public struct ISBannerSlideView: View {
     
     public enum Position: Equatable {
         case center
@@ -226,7 +226,7 @@ public struct URLImageView: View {
 
 @available(iOS 14.0, *)
 #Preview {
-    BannerSlideV(items: [
+    ISBannerSlideView(items: [
         "https://picsum.photos/300/200",
         "https://picsum.photos/300/200333",
         "https://picsum.photos/300/200"
