@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 @available(iOS 14.0, *)
-struct NonBouncingScrollView<Content: View>: UIViewRepresentable {
+internal struct ISNonBouncingScrollView<Content: View>: UIViewRepresentable {
     let content: Content
     let axis: Axis.Set
 

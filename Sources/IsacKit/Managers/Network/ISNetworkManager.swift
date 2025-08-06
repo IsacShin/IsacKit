@@ -12,60 +12,22 @@ final public class ISNetworkManager {
     @MainActor public static let shared = ISNetworkManager()
     private init() {}
 
-    // MARK: - GET
-    public func get<T: Decodable>(
-        from url: URL,
-        parameters: [String: String]? = nil,
-        headers: [String: String] = [:],
+    public func request<T: Decodable>(
+        with router: ISNetworkRouter,
         responseType: T.Type
     ) async throws -> T {
-        var finalURL = url
-        if let queryParameters = parameters {
-            finalURL = url.appendingQueryParameters(queryParameters)
-        }
-
-        return try await request(
-            url: finalURL,
-            method: "GET",
-            headers: headers,
-            responseType: responseType
-        )
-    }
-
-    // MARK: - POST
-    public func post<T: Decodable, U: Encodable>(
-        to url: URL,
-        parameters: U,
-        headers: [String: String] = [:],
-        responseType: T.Type
-    ) async throws -> T {
-        let bodyData = try JSONEncoder().encode(parameters)
-        return try await request(
-            url: url,
-            method: "POST",
-            body: bodyData,
-            headers: headers,
-            responseType: responseType
-        )
+        let request = router.urlRequest
+        return try await perform(request: request, responseType: responseType)
     }
 
     // MARK: - Internal Request Handler
-    private func request<T: Decodable>(
-        url: URL,
-        method: String,
-        body: Data? = nil,
-        headers: [String: String] = [:],
+    private func perform<T: Decodable>(
+        request: URLRequest,
         responseType: T.Type
     ) async throws -> T {
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.httpBody = body
-        request.allHTTPHeaderFields = headers
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
         // 🔍 Logging Request
-        print("[\(method)] \(url.absoluteString)")
-        if let body = body {
+        print("[\(request.httpMethod ?? "UNKNOWN")] \(request.url?.absoluteString ?? "-")")
+        if let body = request.httpBody {
             print("Request Body: \(String(data: body, encoding: .utf8) ?? "-")")
         }
 
@@ -97,4 +59,41 @@ final public class ISNetworkManager {
             throw error as? ISAPIError ?? ISAPIError.custom(message: error.localizedDescription)
         }
     }
+    
+    
+    //    // MARK: - GET
+    //    public func get<T: Decodable>(
+    //        from url: URL,
+    //        parameters: [String: String]? = nil,
+    //        headers: [String: String] = [:],
+    //        responseType: T.Type
+    //    ) async throws -> T {
+    //        var finalURL = url
+    //        if let queryParameters = parameters {
+    //            finalURL = url.appendingQueryParameters(queryParameters)
+    //        }
+    //
+    //        var request = URLRequest(url: finalURL)
+    //        request.httpMethod = "GET"
+    //        request.allHTTPHeaderFields = headers
+    //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    //        return try await perform(request: request, responseType: responseType)
+    //    }
+    //
+    //    // MARK: - POST
+    //    public func post<T: Decodable, U: Encodable>(
+    //        to url: URL,
+    //        parameters: U,
+    //        headers: [String: String] = [:],
+    //        responseType: T.Type
+    //    ) async throws -> T {
+    //        let bodyData = try JSONEncoder().encode(parameters)
+    //        var request = URLRequest(url: url)
+    //        request.httpMethod = "POST"
+    //        request.httpBody = bodyData
+    //        request.allHTTPHeaderFields = headers
+    //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    //        return try await perform(request: request, responseType: responseType)
+    //    }
+
 }

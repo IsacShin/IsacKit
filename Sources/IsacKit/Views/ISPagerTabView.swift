@@ -76,7 +76,7 @@ public struct ISPagerTabBarView: View {
         // 탭 버튼
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
-            NonBouncingScrollView(.horizontal) {
+            ISNonBouncingScrollView(.horizontal) {
                 HStack(spacing: 20) {
                     Spacer().frame(width: 0)
                     ForEach(tabs.indices, id: \.self) { index in
