@@ -7,10 +7,14 @@
 
 import Foundation
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 final public class ISNetworkManager {
     @MainActor public static let shared = ISNetworkManager()
-    private init() {}
+    private let logger: ISNetworkLoggerProtocol
+
+    private init(logger: ISNetworkLoggerProtocol = ISNetworkLogger()) {
+        self.logger = logger
+    }
 
     public func request<T: Decodable>(
         with router: ISNetworkRouter,
@@ -26,22 +30,16 @@ final public class ISNetworkManager {
         responseType: T.Type
     ) async throws -> T {
         // 🔍 Logging Request
-        print("[\(request.httpMethod ?? "UNKNOWN")] \(request.url?.absoluteString ?? "-")")
-        if let body = request.httpBody {
-            print("Request Body: \(String(data: body, encoding: .utf8) ?? "-")")
-        }
+        logger.logRequest(request)
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
+            // 🔍 Logging Response
+            logger.logResponse(data: data, response: response)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw ISAPIError.invalidResponse
             }
-
-            // 🔍 Logging Response
-            print("Status Code: \(httpResponse.statusCode)")
-            print("Response Body: \(String(data: data, encoding: .utf8) ?? "-")")
-
             guard 200..<300 ~= httpResponse.statusCode else {
                 throw ISAPIError.serverError(statusCode: httpResponse.statusCode)
             }
@@ -55,7 +53,7 @@ final public class ISNetworkManager {
 
         } catch {
             // 🔍 Logging Error
-            print("Network Error: \(error.localizedDescription)")
+            logger.logError(error)
             throw error as? ISAPIError ?? ISAPIError.custom(message: error.localizedDescription)
         }
     }
