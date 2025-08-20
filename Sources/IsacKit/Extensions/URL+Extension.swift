@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension URL {
-    public func appendingQueryParameters(_ parameters: [String: String]) -> URL {
+public extension URL {
+    func appendingQueryParameters(_ parameters: [String: String]) -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
             return self
         }

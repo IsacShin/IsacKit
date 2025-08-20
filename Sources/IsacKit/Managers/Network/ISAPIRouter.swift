@@ -68,27 +68,18 @@ import Foundation
  }
  */
 
-public protocol ISNetworkRouter {
-    var baseURL: URL { get }
-    var path: String { get }
-    var method: String { get }
-    var headers: [String: String] { get }
-    var queryParameters: [String: String]? { get }
-    var body: Data? { get }
+public enum ISHTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
 }
 
-extension ISNetworkRouter {
-    var urlRequest: URLRequest {
-        var url = baseURL.appendingPathComponent(path)
-        if let queryParameters = queryParameters {
-            url = url.appendingQueryParameters(queryParameters)
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.httpBody = body
-        request.allHTTPHeaderFields = headers
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        return request
-    }
+public protocol ISAPIRouter {
+    var baseURL: String { get }
+    var path: String { get }
+    var method: ISHTTPMethod { get }
+    var headers: [String: String] { get }
+    var queryParameters: [URLQueryItem]? { get }
+    var body: Data? { get }
 }
