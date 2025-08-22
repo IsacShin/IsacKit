@@ -1,0 +1,51 @@
+{
+  "originHash" : "ba63c13d8dd6e236a2c319ea4c4a36f17aeadb1855b1ef6b1113dcb1726cc13b",
+  "pins" : [
+    {
+      "identity" : "isaccore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsacShin/IsacCore.git",
+      "state" : {
+        "revision" : "86363393c996243ecc93fd60b15fb086c2c92012",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "isacfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsacShin/IsacFoundation.git",
+      "state" : {
+        "revision" : "9e6c0d9edcbda442f5af4c480af01d0b881d4801",
+        "version" : "0.0.1"
+      }
+    },
+    {
+      "identity" : "isacnetwork",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsacShin/IsacNetwork.git",
+      "state" : {
+        "revision" : "d36b106eb8a0828c8b7cedd52f538da5ad53b243",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "isacstorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsacShin/IsacStorage.git",
+      "state" : {
+        "revision" : "f3bb590db5c520eff58803f3f114d21dff6b1311",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "isacuicomponent",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsacShin/IsacUIComponent.git",
+      "state" : {
+        "revision" : "ef5565bd842d1f372ad9a662c49feb5e3fd44400",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}

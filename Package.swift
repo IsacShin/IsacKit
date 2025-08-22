@@ -11,11 +11,18 @@ let package = Package(
             name: "IsacKit",
             targets: ["IsacKit"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/IsacShin/IsacUIComponent.git", from: "0.0.2"),
+        .package(url: "https://github.com/IsacShin/IsacNetwork.git", from: "0.0.2"),
+        .package(url: "https://github.com/IsacShin/IsacStorage.git", from: "0.0.2")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "IsacKit"),
+            name: "IsacKit"
+            ,dependencies: ["IsacUIComponent", "IsacNetwork", "IsacStorage"]
+        ),
         .testTarget(
             name: "IsacKitTests",
             dependencies: ["IsacKit"]
