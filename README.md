@@ -33,13 +33,13 @@ UI 컴포넌트, 네비게이션 관리, 데이터 저장, 네트워크 유틸�
 
 ### Swift Package Manager (SPM)
 
-Xcode → Project → Package Dependencies → Add: https://github.com/yourname/IsacKit.git
+Xcode → Project → Package Dependencies → Add: https://github.com/IsacShin/IsacKit.git
 
 또는 `Package.swift` 에 추가:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourname/IsacKit.git", from: "1.0.0")
+    .package(url: "https://github.com/IsacShin/IsacKit.git", from: "1.0.0")
 ]
 ```
 ## 📖 사용법 
